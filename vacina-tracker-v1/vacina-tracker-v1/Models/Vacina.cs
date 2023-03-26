@@ -13,13 +13,13 @@ namespace vacina_tracker_v1.Models
         public string Nome { get; set; }
 
         [Required]
-        public DateOnly DataAplicacao { get; set; }
+        public DateTime DataAplicacao { get; set; }
 
         [Required]
         public NumeroDose NumeroDose { get; set; }
 
         [Required]
-        public DateOnly DataProximaAplicacao { get; set; }
+        public DateTime DataProximaAplicacao { get; set; }
 
         public ICollection<Responsavel> Responsavel { get; set; }
     }
