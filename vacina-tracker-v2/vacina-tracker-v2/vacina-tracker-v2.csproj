@@ -4,8 +4,12 @@
     <TargetFramework>net6.0</TargetFramework>
     <Nullable>disable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
-    <RootNamespace>vacina_tracker_v1</RootNamespace>
+    <RootNamespace>vacina_tracker_v2</RootNamespace>
   </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="Controllers\VacinasController.cs" />
+  </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="7.0.4" />

@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace vacina_tracker_v1.Models
+namespace vacina_tracker_v2.Models
 {
     [Table("Vacinas")]
-    public class Vacina
+    public class Vacinas
     {
         [Key]
         public int IdVacina { get; set; }
@@ -19,13 +19,14 @@ namespace vacina_tracker_v1.Models
         public NumeroDose NumeroDose { get; set; }
 
         [Required]
+        public string Local { get; set; }
+
         public DateTime DataProximaAplicacao { get; set; }
 
         [Required]
         public int ResponsavelId { get; set; }
 
         public Responsavel Responsavel { get; set; }
-        
     }
 
     public enum NumeroDose
