@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace vacina_tracker_v2.Models
 {
     [Table("Vacinas")]
-    public class Vacinas
+    public class Vacinas : LinksHATEOS
     {
         [Key]
         public int IdVacina { get; set; }

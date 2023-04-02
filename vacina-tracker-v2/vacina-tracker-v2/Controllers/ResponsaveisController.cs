@@ -43,6 +43,8 @@ namespace vacina_tracker_v2.Controllers
 
             if (model == null) return NotFound();
 
+            GerarLinks(model);
+
             return Ok(model);
         }
 
@@ -72,6 +74,13 @@ namespace vacina_tracker_v2.Controllers
             await _context.SaveChangesAsync();
 
             return NoContent();
+        }
+
+        private void GerarLinks(Responsavel model)
+        {
+            model.Links.Add(new LinkDto(model.IdResponsavel, Url.ActionLink(), rel: "self", metodo: "GET"));
+            model.Links.Add(new LinkDto(model.IdResponsavel, Url.ActionLink(), rel: "update", metodo: "PUT"));
+            model.Links.Add(new LinkDto(model.IdResponsavel, Url.ActionLink(), rel: "delete", metodo: "DELETE"));
         }
     }
 }

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace vacina_tracker_v2.Models
 {
     [Table("Perfil Usuário Responsável")]
-    public class Responsavel
+    public class Responsavel : LinksHATEOS
     {
         [Key]
         public int IdResponsavel { get; set; }
