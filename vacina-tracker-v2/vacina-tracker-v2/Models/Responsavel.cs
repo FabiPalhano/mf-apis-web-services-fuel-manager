@@ -7,7 +7,7 @@ namespace vacina_tracker_v2.Models
     public class Responsavel : LinksHATEOS
     {
         [Key]
-        public int IdResponsavel { get; set; }
+        public int Id { get; set; }
 
         [Display(Name = "Nome Completo")]
         [Required(ErrorMessage = ("Obrigatório informar o nome completo"))]
@@ -22,7 +22,7 @@ namespace vacina_tracker_v2.Models
         [Display(Name = "Tipo de Usuário")]
         public TipoUsuario TipoUsuario { get; set; }
 
-        public ICollection<Vacinas> Vacinas { get; set; }
+        public ICollection<VacinasUsuarios> Vacina { get; set; }
     }
 
     public enum TipoUsuario
@@ -31,6 +31,5 @@ namespace vacina_tracker_v2.Models
         TipoResponsavel,
         [Display(Name = "Dependente")]
         TipoDependente
-
     }
 }

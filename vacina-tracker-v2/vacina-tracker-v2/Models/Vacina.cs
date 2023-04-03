@@ -3,11 +3,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace vacina_tracker_v2.Models
 {
-    [Table("Vacinas")]
-    public class Vacinas : LinksHATEOS
+    [Table("Vacinas Adicionadas")]
+    public class Vacina : LinksHATEOS
     {
         [Key]
-        public int IdVacina { get; set; }
+        public int Id { get; set; }
 
         [Required]
         public string NomeVacina { get; set; }
@@ -16,20 +16,20 @@ namespace vacina_tracker_v2.Models
         public DateTime DataAplicacao { get; set; }
 
         [Required]
-        public NumeroDose NumeroDose { get; set; }
+        public Dose Dose { get; set; }
 
         [Required]
         public string Local { get; set; }
 
         public DateTime DataProximaAplicacao { get; set; }
 
-        [Required]
-        public int ResponsavelId { get; set; }
+        
+        public ICollection<VacinasUsuarios> Responsavel { get; set; }
 
-        public Responsavel Responsavel { get; set; }
+        public ICollection<VacinasUsuarios> Dependente { get; set; }
     }
 
-    public enum NumeroDose
+    public enum Dose
     {
         [Display(Name = "Dose Única")]
         DoseUnica,
@@ -38,6 +38,8 @@ namespace vacina_tracker_v2.Models
         [Display(Name = "Segunda Dose")]
         SegundaDose,
         [Display(Name = "Terceira Dose")]
-        TerceiraDose
+        TerceiraDose,
+        [Display(Name = "Quarta Dose")]
+        QuartaDose
     }
 }

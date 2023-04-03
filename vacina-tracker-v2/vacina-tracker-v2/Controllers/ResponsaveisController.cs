@@ -32,14 +32,14 @@ namespace vacina_tracker_v2.Controllers
 
             //return Ok(model);
 
-            return CreatedAtAction("GetById", new { id = model.IdResponsavel }, model);
+            return CreatedAtAction("GetById", new { id = model.Id }, model);
         }
 
         [HttpGet("{id}")]
         public async Task<ActionResult> GetById(int id)
         {
             var model = await _context.Responsavel
-                .FirstOrDefaultAsync(c => c.IdResponsavel == id);
+                .FirstOrDefaultAsync(c => c.Id == id);
 
             if (model == null) return NotFound();
 
@@ -51,9 +51,9 @@ namespace vacina_tracker_v2.Controllers
         [HttpPut("{id}")]
         public async Task<ActionResult> Update(int id, Responsavel model)
         {
-            if (id != model.IdResponsavel) return BadRequest();
+            if (id != model.Id) return BadRequest();
             var modeloDb = await _context.Responsavel.AsNoTracking()
-                .FirstOrDefaultAsync(c => c.IdResponsavel == id);
+                .FirstOrDefaultAsync(c => c.Id == id);
 
             if (modeloDb == null) return NotFound();
 
@@ -78,9 +78,9 @@ namespace vacina_tracker_v2.Controllers
 
         private void GerarLinks(Responsavel model)
         {
-            model.Links.Add(new LinkDto(model.IdResponsavel, Url.ActionLink(), rel: "self", metodo: "GET"));
-            model.Links.Add(new LinkDto(model.IdResponsavel, Url.ActionLink(), rel: "update", metodo: "PUT"));
-            model.Links.Add(new LinkDto(model.IdResponsavel, Url.ActionLink(), rel: "delete", metodo: "DELETE"));
+            model.Links.Add(new LinkDto(model.Id, Url.ActionLink(), rel: "self", metodo: "GET"));
+            model.Links.Add(new LinkDto(model.Id, Url.ActionLink(), rel: "update", metodo: "PUT"));
+            model.Links.Add(new LinkDto(model.Id, Url.ActionLink(), rel: "delete", metodo: "DELETE"));
         }
     }
 }
