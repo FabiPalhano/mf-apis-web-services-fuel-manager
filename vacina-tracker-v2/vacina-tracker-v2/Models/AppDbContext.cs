@@ -12,7 +12,7 @@ namespace vacina_tracker_v2.Models
         protected override void OnModelCreating(ModelBuilder builder)
         {
             builder.Entity<VacinasUsuarios>()
-                .HasKey(c => new { c.VacinaId, c.ResponsavelId, c.DependenteId });
+                .HasKey(c => new { c.VacinaId, c.ResponsavelId });
 
             builder.Entity<VacinasUsuarios>()
                 .HasOne(c => c.Vacina).WithMany(c => c.Responsavel)
@@ -20,16 +20,12 @@ namespace vacina_tracker_v2.Models
 
             builder.Entity<VacinasUsuarios>()
                 .HasOne(c => c.Responsavel).WithMany(c => c.Vacina)
-                .HasForeignKey(c => c.ResponsavelId);
-            
-            builder.Entity<VacinasUsuarios>()
-                .HasOne(c => c.Dependente).WithMany(c => c.Vacina)
-                .HasForeignKey(c => c.DependenteId);
+                .HasForeignKey(c => c.ResponsavelId);  
         }
 
         public DbSet<Vacina> Vacina { get; set; }
-        public DbSet<Responsavel> Responsavel { get; set; }
-        public DbSet<Dependente> Dependente { get; set; }
+        public DbSet<Responsavel> Responsavel { get; set; }        
+        public DbSet<VacinasUsuarios> VacinasUsuarios { get; set; }
 
     }
 }

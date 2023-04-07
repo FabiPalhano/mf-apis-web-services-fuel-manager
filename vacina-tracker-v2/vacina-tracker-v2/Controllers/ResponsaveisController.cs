@@ -25,14 +25,22 @@ namespace vacina_tracker_v2.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Create(Responsavel model)
+        public async Task<ActionResult> Create(ResponsavelDto model)
         {
-            _context.Responsavel.Add(model);
+            Responsavel novo = new Responsavel()
+            {
+                Nome = model.Nome,
+                Email = model.Email,
+                Senha = BCrypt.Net.BCrypt.HashPassword(model.Senha),
+                TipoUsuario = model.TipoUsuario,
+        };
+            
+            _context.Responsavel.Add(novo);
             await _context.SaveChangesAsync();
 
             //return Ok(model);
 
-            return CreatedAtAction("GetById", new { id = model.Id }, model);
+            return CreatedAtAction("GetById", new { id = novo.Id }, novo);
         }
 
         [HttpGet("{id}")]
@@ -49,7 +57,7 @@ namespace vacina_tracker_v2.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> Update(int id, Responsavel model)
+        public async Task<ActionResult> Update(int id, ResponsavelDto model)
         {
             if (id != model.Id) return BadRequest();
             var modeloDb = await _context.Responsavel.AsNoTracking()
@@ -57,7 +65,12 @@ namespace vacina_tracker_v2.Controllers
 
             if (modeloDb == null) return NotFound();
 
-            _context.Responsavel.Update(model);
+            modeloDb.Nome = model.Nome;
+            modeloDb.Email = model.Email;
+            modeloDb.Senha = BCrypt.Net.BCrypt.HashPassword(model.Senha);
+            modeloDb.TipoUsuario = model.TipoUsuario;
+
+            _context.Responsavel.Update(modeloDb);
             await _context.SaveChangesAsync();
 
             return NoContent();

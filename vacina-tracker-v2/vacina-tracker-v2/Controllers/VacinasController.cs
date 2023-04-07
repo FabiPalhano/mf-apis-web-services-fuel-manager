@@ -40,6 +40,7 @@ namespace vacina_tracker_v2.Controllers
         public async Task<ActionResult> GetById(int id)
         {
             var model = await _context.Vacina
+                .Include(t => t.Responsavel).ThenInclude(t => t.Responsavel)
                 .Include(t => t.Responsavel)
                 .FirstOrDefaultAsync(c => c.Id == id);
 
@@ -83,6 +84,31 @@ namespace vacina_tracker_v2.Controllers
             model.Links.Add(new LinkDto(model.Id, Url.ActionLink(), rel: "self", metodo: "GET"));
             model.Links.Add(new LinkDto(model.Id, Url.ActionLink(), rel: "update", metodo: "PUT"));
             model.Links.Add(new LinkDto(model.Id, Url.ActionLink(), rel: "delete", metodo: "DELETE"));
+        }
+
+        [HttpPost("{id}/responsaveis")]
+        public async Task<ActionResult> AddResponsavel(int id, VacinasUsuarios model)
+        {
+            if (id != model.VacinaId) return BadRequest();
+            _context.VacinasUsuarios.Add(model);
+            await _context.SaveChangesAsync();
+
+            return CreatedAtAction("GetById", new { id = model.VacinaId }, model);
+        }
+
+        [HttpDelete("{id}/responsaveis/{ResponsavelId}")]
+        public async Task<ActionResult> DeleteResponsavel(int id, int ResponsavelId)
+        {
+            var model = await _context.VacinasUsuarios
+                .Where(c => c.VacinaId == id && c.ResponsavelId == ResponsavelId)
+                .FirstOrDefaultAsync();
+
+            if (model == null) return NotFound();
+
+            _context.VacinasUsuarios.Remove(model);
+            await _context.SaveChangesAsync();
+
+            return NoContent();
         }
     }
 }

@@ -19,14 +19,9 @@ namespace vacina_tracker_v2.Models
         public Dose Dose { get; set; }
 
         [Required]
-        public string Local { get; set; }
-
-        public DateTime DataProximaAplicacao { get; set; }
-
-        
-        public ICollection<VacinasUsuarios> Responsavel { get; set; }
-
-        public ICollection<VacinasUsuarios> Dependente { get; set; }
+        public DateTime DataProxAplicacao { get; set; }
+                
+        public ICollection<VacinasUsuarios> Responsavel { get; set; }                
     }
 
     public enum Dose

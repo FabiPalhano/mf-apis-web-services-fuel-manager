@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace vacina_tracker_v2.Models
 {
@@ -17,6 +18,7 @@ namespace vacina_tracker_v2.Models
         public string Email { get; set; }
 
         [Required(ErrorMessage = ("Obrigatório informar senha"))]
+        [JsonIgnore]
         public string Senha { get; set; }
 
         [Display(Name = "Tipo de Usuário")]

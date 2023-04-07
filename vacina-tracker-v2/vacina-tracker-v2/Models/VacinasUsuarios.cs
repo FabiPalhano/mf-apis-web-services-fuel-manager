@@ -9,9 +9,6 @@ namespace vacina_tracker_v2.Models
         public Vacina Vacina { get; set; }
 
         public int ResponsavelId { get; set; }
-        public Responsavel Responsavel { get; set; }
-
-        public int DependenteId { get; set; }
-        public Dependente Dependente { get; set; }
+        public Responsavel Responsavel { get; set; }       
     }
 }
