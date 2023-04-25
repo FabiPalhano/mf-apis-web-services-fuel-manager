@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using vacina_tracker_v2.Models;
+using vacina_tracker_v3.Models;
 
-namespace vacina_tracker_v2.Controllers
+namespace vacina_tracker_v3.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
@@ -19,7 +19,7 @@ namespace vacina_tracker_v2.Controllers
         [HttpGet]
         public async Task<ActionResult> GetAll()
         {
-            var model = await _context.Vacina.ToListAsync();
+            var model = await _context.Vacinas.ToListAsync();
 
             return Ok(model);
         }
@@ -27,7 +27,7 @@ namespace vacina_tracker_v2.Controllers
         [HttpPost]
         public async Task<ActionResult> Create(Vacina model)
         {
-            _context.Vacina.Add(model);
+            _context.Vacinas.Add(model);
             await _context.SaveChangesAsync();
 
             //return Ok(model);
@@ -38,9 +38,9 @@ namespace vacina_tracker_v2.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult> GetById(int id)
         {
-            var model = await _context.Vacina
-                .Include(t => t.Responsavel).ThenInclude(t => t.Responsavel)
-                .Include(t => t.Responsavel)
+            var model = await _context.Vacinas
+                //.Include(t => t.Membros).ThenInclude(t => t.Membro)
+                .Include(t => t.Membros)
                 .FirstOrDefaultAsync(c => c.Id == id);
 
             if (model == null) return NotFound();
@@ -54,12 +54,13 @@ namespace vacina_tracker_v2.Controllers
         public async Task<ActionResult> Update(int id, Vacina model)
         {
             if (id != model.Id) return BadRequest();
-            var modeloDb = await _context.Vacina.AsNoTracking()
+            
+            var modeloDb = await _context.Vacinas.AsNoTracking()
                 .FirstOrDefaultAsync(c => c.Id == id);
 
             if (modeloDb == null) return NotFound();
 
-            _context.Vacina.Update(model);
+            _context.Vacinas.Update(model);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -68,11 +69,11 @@ namespace vacina_tracker_v2.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> Delete(int id)
         {
-            var model = await _context.Vacina.FindAsync(id);
+            var model = await _context.Vacinas.FindAsync(id);
 
             if (model == null) return NotFound();
 
-            _context.Vacina.Remove(model);
+            _context.Vacinas.Remove(model);
             await _context.SaveChangesAsync();
 
             return NoContent();
@@ -83,31 +84,6 @@ namespace vacina_tracker_v2.Controllers
             model.Links.Add(new LinkDto(model.Id, Url.ActionLink(), rel: "self", metodo: "GET"));
             model.Links.Add(new LinkDto(model.Id, Url.ActionLink(), rel: "update", metodo: "PUT"));
             model.Links.Add(new LinkDto(model.Id, Url.ActionLink(), rel: "delete", metodo: "DELETE"));
-        }
-
-        [HttpPost("{id}/responsaveis")]
-        public async Task<ActionResult> AddResponsavel(int id, VacinasUsuarios model)
-        {
-            if (id != model.VacinaId) return BadRequest();
-            _context.VacinasUsuarios.Add(model);
-            await _context.SaveChangesAsync();
-
-            return CreatedAtAction("GetById", new { id = model.VacinaId }, model);
-        }
-
-        [HttpDelete("{id}/responsaveis/{ResponsavelId}")]
-        public async Task<ActionResult> DeleteResponsavel(int id, int ResponsavelId)
-        {
-            var model = await _context.VacinasUsuarios
-                .Where(c => c.VacinaId == id && c.ResponsavelId == ResponsavelId)
-                .FirstOrDefaultAsync();
-
-            if (model == null) return NotFound();
-
-            _context.VacinasUsuarios.Remove(model);
-            await _context.SaveChangesAsync();
-
-            return NoContent();
         }
     }
 }
