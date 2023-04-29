@@ -10,7 +10,6 @@ namespace vacina_tracker_v4.Models
         public int Id { get; set; }
 
         [Required(ErrorMessage = ("Obrigatório informar o Nome"))]
-        [MaxLength(30)]
         public string NomeMembroFamilia { get; set; }
 
         [Required(ErrorMessage = ("Obrigatório informar a idade"))]
