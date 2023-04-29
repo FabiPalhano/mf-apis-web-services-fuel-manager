@@ -20,9 +20,10 @@ namespace vacina_tracker_v4.Models
                 .HasForeignKey(c => c.MembroId);
         }*/
 
-        public DbSet<Vacina> Vacinas { get; set; }
-        //public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<Vacina> Vacinas { get; set; }       
         public DbSet<Membro> Membros { get; set; }
+
+        //public DbSet<Usuario> Usuarios { get; set; }
         //public DbSet<VacinaMembro> VacinasMembros { get; set; }
     }
 }

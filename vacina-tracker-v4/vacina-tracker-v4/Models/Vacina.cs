@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace vacina_tracker_v4.Models
 {
     [Table("Vacinas")]
-    public class Vacina
+    public class Vacina : LinksHATEOS
     {
         [Key]
         public int Id { get; set; }
@@ -20,14 +20,11 @@ namespace vacina_tracker_v4.Models
 
         [Required(ErrorMessage = ("Obrigatório informar a Data da Próxima Aplicação da Vacina"))]
         public DateTime DataProxAplicacao { get; set; }
+               
+
+        public ICollection<Membro> Membros { get; set; } //1 membro está associado a várias vacinas
 
 
-        [Required]
-        public int MembroId { get; set; } //configuração automática da forenkey - 1 membro está associado a 1 vacina
-
-        public Membro Membro { get; set; } //navegação virtual
-
-        
         //public ICollection<VacinaMembro> Membros { get; set; }
     }
 
