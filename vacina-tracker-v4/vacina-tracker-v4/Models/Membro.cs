@@ -23,6 +23,6 @@ namespace vacina_tracker_v4.Models
 
         //public ICollection<Vacina> Vacinas { get; set; } //1 membro está associado a várias vacinas
 
-        //public ICollection<VacinaMembro> Vacinas { get; set; }
+        public ICollection<UsuarioMembros> Usuarios { get; set; } //membro pode estar associado a vários usuários
     }
 }

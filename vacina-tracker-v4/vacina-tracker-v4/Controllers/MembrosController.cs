@@ -1,10 +1,12 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using vacina_tracker_v4.Models;
 
 namespace vacina_tracker_v4.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class MembrosController : ControllerBase
@@ -83,6 +85,6 @@ namespace vacina_tracker_v4.Controllers
             model.Links.Add(new LinkDto(model.Id, Url.ActionLink(), rel: "self", metodo: "GET"));
             model.Links.Add(new LinkDto(model.Id, Url.ActionLink(), rel: "update", metodo: "PUT"));
             model.Links.Add(new LinkDto(model.Id, Url.ActionLink(), rel: "delete", metodo: "DELETE"));
-        }
+        } 
     }
 }
